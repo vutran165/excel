@@ -1,0 +1,25 @@
+<md-toolbar class="black" layout="row">
+  <h1 class="md-toolbar-tools thin">File Upload with Material</h1>
+  <span flex></span>
+</md-toolbar>
+<form action="post" enctype="multipart/form-data">
+  <md-content layout-padding>
+    <div>
+      <md-button class="md-raised">
+        <label for="file-input">Select file to upload</label>
+      </md-button>
+
+      <input class="file-input" enctype="multipart/form-data" type="file" multiple ng-files="getTheFiles($files)"
+        flow-btn id="file-input">
+
+      <table>
+        <tr ng-repeat="file in $flow.files">
+          <td>{{$index+1}}</td>
+          <td>{{file.name}}</td>
+          <td>{{file.msg}}</td>
+        </tr>
+      </table>
+    </div>
+    <md-button class="md-raised md-primary" ng-click="upload()">Primary</md-button>
+  </md-content>
+</form>
