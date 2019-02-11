@@ -7,11 +7,14 @@ appExcel.factory('excelService', ['$resource', '$http', '$window', '$q',
 
         var result = {
             Url: rootUrl,
-            single: function (data, callback) {
-                $http.post(rootUrl + '/api/singleFile', data).then(callback);
+            single: function (data, config, callback) {
+                $http.post(rootUrl + '/api/singleFile', data, config).then(callback);
             },
-            multiple: function (data, callback) {
-                $http.post(rootUrl + '/multipeFile', data).then(callback);
+            test: function (data, config, callback) {
+                $http.post(rootUrl + '/api/uploadExcelFile', data, config).then(callback);
+            },
+            multiple: function (data, callback, config) {
+                $http.post(rootUrl + '/multipeFile', data, config).then(callback);
             }
         }
 
@@ -28,19 +31,23 @@ appExcel.controller('uploadFileController', ['$scope', '$rootScope', '$log', '$h
             angular.forEach($files, function (value, key) {
                 formData.append("files", value);
             });
-            
+
             // check value in FormData
-            // for (var value of formData.values()) {
-            //     console.log(value); 
-            //  }
-            
+            for (var value of formData.values()) {
+                console.log(value); 
+             }
+
         }
 
         $scope.upload = function () {
             console.log(formData);
-            excelService.single(formData, function (err) {
+            // var config = {
+            //     headers 
+            // }
+            excelService.test(formData, { 'Content-Type': undefined }, function (err) {
                 conosle.log(err);
             });
+
 
         }
 
