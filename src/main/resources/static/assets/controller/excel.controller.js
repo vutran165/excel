@@ -47,8 +47,13 @@ appExcel.controller('uploadFileController', ['$scope', '$rootScope', '$log', '$h
             // var config = {
             //     headers 
             // }
-            excelService.test(formData, { 'Content-Type': undefined }, function (err) {
-                conosle.log(err);
+            excelService.upload(formData, { 
+                transformRequest : angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                } 
+            }, function (err) {
+                console.log(err);
             });
 
 

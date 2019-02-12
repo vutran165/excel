@@ -123,6 +123,7 @@ public class RestApiController {
     @PostMapping("/upload")
     public @ResponseBody ResponseMetadata handleFileUpload(@RequestParam(value = "files") MultipartFile multipartFile)
             throws IOException {
+                
         return iFileService.save(multipartFile);
     }
 }
