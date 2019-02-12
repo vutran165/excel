@@ -13,6 +13,9 @@ appExcel.factory('excelService', ['$resource', '$http', '$window', '$q',
             test: function (data, config, callback) {
                 $http.post(rootUrl + '/api/uploadExcelFile', data, config).then(callback);
             },
+            upload: function (data, config, callback) {
+                $http.post(rootUrl + '/api/upload', data, config).then(callback);
+            },
             multiple: function (data, callback, config) {
                 $http.post(rootUrl + '/multipeFile', data, config).then(callback);
             }

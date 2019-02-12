@@ -1,12 +1,27 @@
-package com.java.excel;
+package com.java.excel.dao;
 
 public class FileRepository {
     private String filename;
     private String row;
     private String column;
     private String versionExcel;
+    private byte[] file;
 
     public FileRepository() {
+    }
+
+    /**
+     * @return the file
+     */
+    public byte[] getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
     public FileRepository(String filename, String row, String column, String versionExcel) {

@@ -1,4 +1,4 @@
-package com.java.excel;
+package com.java.excel.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,10 +13,15 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.java.excel.dao.IFileRepository;
+import com.java.excel.service.IFileService;
+import com.java.excel.service.ResponseMetadata;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,12 +42,14 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 
 @RestController
 @RequestMapping(value = "/api")
-// @MultipartConfig(fileSizeThreshold=1024*1024*10, // 10 MB
-// maxFileSize=1024*1024*50, // 50 MB
-// maxRequestSize=1024*1024*100)
 public class RestApiController {
 
     private String fileLocation;
+
+    
+
+    @Autowired
+    IFileService iFileService;
 
     @PostMapping("/singleFile")
     @ResponseBody
@@ -105,11 +112,17 @@ public class RestApiController {
             model.addAttribute("message", "File: " + file.getOriginalFilename() + " has been uploaded successfully!");
             return "excel";
         } catch (Exception e) {
-            //TODO: handle exception
+            // TODO: handle exception
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
             return e.getMessage();
         }
-       
+
+    }
+
+    @PostMapping("/upload")
+    public @ResponseBody ResponseMetadata handleFileUpload(@RequestParam(value = "files") MultipartFile multipartFile)
+            throws IOException {
+        return iFileService.save(multipartFile);
     }
 }
